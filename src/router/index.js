@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeComponent from '@/components/HomeComponent.vue'
 import FilmsComponent from '@/components/FilmsComponent.vue'
 import HallsComponent from '@/components/HallsComponent.vue'
+import CreateHall from '@/components/CreateHall.vue'
 
 
 const router = createRouter({
@@ -21,6 +22,11 @@ const router = createRouter({
       path: '/halls',
       name: 'halls',
       component: HallsComponent
+    },
+    {
+      path: '/createHall',
+      name: 'createHall',
+      component: CreateHall,
     }
   ]
 })

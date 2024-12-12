@@ -1,8 +1,11 @@
 <script setup>
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import { useDataStore } from '@/stores/dataStore.js'
-import { computed, onMounted, ref } from 'vue'
+import { useDataStore } from '@/stores/dataStore.js';
+import { computed, onMounted, ref } from 'vue';
+import router from '@/router/index.js';
+import Button from 'primevue/button';
+
 
 const store = useDataStore();
 const halls = computed(() => store.halls);
@@ -14,6 +17,8 @@ onMounted(async() => {
   await store.getHalls();
   await store.getHallsTotal();
 })
+
+console.log(halls.value)
 
 const onPageChange = async(e) => {
   offset.value = e.first;
@@ -37,6 +42,17 @@ const onPageChange = async(e) => {
   >
     <Column field="id" header="N°"/>
     <Column field="name" header="Hall's title"/>
+
+    <Column header="Image">
+      <template #body="slotProps">
+        <img :src="slotProps.data.picture_url" :alt="slotProps.data.image" class="w-24 rounded" />
+      </template>
+    </Column>
+    <template #footer>
+      <div class="text-end">
+        <Button type="button" @click="router.push('/createHall')" class="pi-plus" label="Добавить зал"/>
+      </div>
+    </template>
   </DataTable>
 </template>
 

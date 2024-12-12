@@ -8,6 +8,8 @@ export const useDataStore = defineStore('data', {
     filmsTotal: null,
     halls: [],
     hallsTotal: null,
+    errorMsg: "",
+    errorCode: null,
   }),
   actions: {
     async getFilms(perpage = 5, page = 0) {
@@ -54,6 +56,7 @@ export const useDataStore = defineStore('data', {
           }
         })
         this.halls = data;
+        console.log(data)
       } catch (e) {
         if (e.response) {
           this.errorMsg = e.response.data.message;
@@ -77,6 +80,31 @@ export const useDataStore = defineStore('data', {
         } else {
           console.log(e)
         }
+      }
+    },
+
+    async createHall(formData) {
+      this.errorMsg = "";
+      try {
+        const {data} = await axios.post(backendUrl + '/hallPicture', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: 'Bearer ' + localStorage.getItem('token'),
+          }
+        });
+        this.errorCode = data.code;
+        this.errorMsg = data.message;
+      } catch (e) {
+        if (e.response) {
+          this.errorCode = 11;
+          this.errorMsg = e.response.data.message;
+        } else if (e.request) {
+          this.errorCode = 12;
+          this.errorMsg = e.message;
+        } else {
+          this.errorCode = 13;
+        }
+        console.log(e);
       }
     }
   }

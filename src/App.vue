@@ -1,28 +1,8 @@
 <script setup>
 import Menubar from 'primevue/menubar';
-import HomeComponent from '@/components/HomeComponent.vue'
 import AuthForm from '@/components/AuthForm.vue'
-import Button from 'primevue/button';
-import InputText from 'primevue/inputtext';
-import { useAuthStore } from '@/stores/authStore.js'
-import { computed, ref } from 'vue'
 
-const store = useAuthStore();
-const isAuth = computed(() => store.isAuth);
-const user = computed(() => store.user);
-const errorMsg = computed(() => store.errorMsg);
-const email = ref('');
-const password = ref('');
-
-const login = async() => {
-  const info = {
-    email: email.value,
-    password: password.value
-  }
-  await store.login(info);
-}
-
-  const items = [
+const items = [
     {
       label: 'Home page',
       icon: 'pi pi-fw pi-home',
