@@ -1,5 +1,6 @@
 import {defineStore} from 'pinia';
 import axios from 'axios';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -12,7 +13,7 @@ export const useAuthStore = defineStore('auth', {
     async login(info) {
       this.errorMsg = "";
       try {
-        const { data } = await axios.post('http://127.0.0.1:8000/api/login', info);
+        const { data } = await axios.post(backendUrl, info);
         this.token = data.token;
         this.user = data.user;
         this.isAuth = true;
@@ -30,7 +31,7 @@ export const useAuthStore = defineStore('auth', {
     async getUser() {
       this.errorMsg = "";
       try {
-        const {data} = await axios.get('http://127.0.0.1:8000/api/getUser',{
+        const {data} = await axios.get(backendUrl,{
           headers: {
             Authorization: 'Bearer ' + this.token
           }
