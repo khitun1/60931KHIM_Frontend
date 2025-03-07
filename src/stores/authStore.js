@@ -13,7 +13,7 @@ export const useAuthStore = defineStore('auth', {
     async login(info) {
       this.errorMsg = "";
       try {
-        const { data } = await axios.post(backendUrl, info);
+        const { data } = await axios.post(backendUrl + '/login', info);
         this.token = data.token;
         this.user = data.user;
         this.isAuth = true;
@@ -31,7 +31,7 @@ export const useAuthStore = defineStore('auth', {
     async getUser() {
       this.errorMsg = "";
       try {
-        const {data} = await axios.get(backendUrl,{
+        const {data} = await axios.get(backendUrl + '/getUser',{
           headers: {
             Authorization: 'Bearer ' + this.token
           }
